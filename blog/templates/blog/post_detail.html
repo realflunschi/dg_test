@@ -22,13 +22,15 @@
     <hr>
     <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
     {% for comment in post.comments.all %}
-        <div class="comment">
-            <time class="date">
-                {{ comment.created_date }}
-            </time>
-            <strong>{{ comment.author }}</strong>
-            <p>{{ comment.text|linebreaks }}</p>
-        </div>
+        {% if comment.approved_comment %}
+            <div class="comment">
+                <time class="date">
+                    {{ comment.created_date }}
+                </time>
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.text|linebreaks }}</p>
+            </div>
+        {% endif %}
     {% empty %}
         <p>No comments here yet <span class="fa fa-frown-o"></span></p>
     {% endfor %}
