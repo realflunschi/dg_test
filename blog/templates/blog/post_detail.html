@@ -20,7 +20,7 @@
         <p>{{ post.text|linebreaksbr }}</p>
     </article>
     <hr>
-    {% for comment in comments %}
+    {% for comment in post.comments.all %}
         <div class="comment">
             <time class="date">
                 {{ comment.created_date }}
