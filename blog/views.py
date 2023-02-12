@@ -8,9 +8,16 @@ def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
+@login_required
+def post_detail_unpublished(request, post):
+    return render(request, 'blog/post_detail.html', {'post': post})
+
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+    if not post.published_date:
+        return post_detail_unpublished(request, post)
+    else:
+        return render(request, 'blog/post_detail.html', {'post': post})
 
 @login_required
 def post_new(request):
